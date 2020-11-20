@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 配置 springMVC -->
+    <context:component-scan base-package="com.yato.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!-- 配置视图解析器 -->
+    <bean id="internalResourceViewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- JSP文件所在的目录 -->
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <!-- 文件的后缀名 -->
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!-- 设置静态资源不过滤 -->
+    <mvc:resources location="/css/" mapping="/css/**" />
+    <mvc:resources location="/images/" mapping="/images/**" />
+    <mvc:resources location="/js/" mapping="/js/**" />
+    <!-- 开启 springMVC 注解模式 -->
+    <!--
+        简化模式的配置：
+            1. 自动注册 DefaultAnnotationHandlerMapping，AnnotationMethodHandlerAdapter
+            2. 提供一系列：
+                数据绑定
+                数字和日期的 format 转换，@NumberFormat, @DataTimeFormat
+                xml、json 的默认读写支持
+
+    -->
+    <mvc:annotation-driven/>
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yato.mapper.ISeckillMapper">
+    <resultMap id="seckill" type="Seckill">
+        <id property="seckillId" column="seckill_id"></id>
+        <result property="name" column="name"></result>
+        <result property="number" column="number"></result>
+        <result property="startTime" column="start_time"></result>
+        <result property="endTime" column="end_time"></result>
+        <result property="createTime" column="create_time"></result>
+    </resultMap>
+    <update id="reduceNumber">
+        update seckill
+        set number = number - 1
+        where seckill_id = #{seckillId}
+            and #{killTime} between start_time and end_time
+                 and number > 0;
+    </update>
+
+    <select id="queryById" resultMap="seckill" parameterType="Long">
+        select seckill_id, name, number, start_time, end_time, create_time
+        from seckill
+        where seckill_id = #{seckillId};
+    </select>
+    <select id="queryAll" resultMap="seckill">
+        select seckill_id, name, number, start_time, end_time, create_time
+        from seckill
+        order by create_time desc
+        limit #{offset}, #{limit};
+    </select>
+
+</mapper>

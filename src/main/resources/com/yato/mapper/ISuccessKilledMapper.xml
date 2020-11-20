@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yato.mapper.ISuccessKilledMapper">
+    <resultMap id="successKilled" type="successKilled">
+        <id property="seckillId" column="sk_seckill_id"></id>
+        <result property="userPhone" column="user_phone"></result>
+        <result property="state" column="state"></result>
+        <result property="createTime" column="sk_create_time"></result>
+        <association property="seckill" javaType="Seckill" >
+            <id property="seckillId" column="seckill_id"></id>
+            <result property="name" column="name"></result>
+            <result property="number" column="number"></result>
+            <result property="startTime" column="start_time"></result>
+            <result property="endTime" column="end_time"></result>
+            <result property="createTime" column="create_time"></result>
+        </association>
+    </resultMap>
+    <insert id="insertSuccessKilledInfo">
+--      insert into 如果主键冲突会报错，如果使用
+--      insert ignore into 如果主键冲突，不会报错，只是不会插入数据
+        insert ignore
+        into success_killed(seckill_id, user_phone, create_time, state)
+        values(#{seckillId}, #{userPhone}, now(), 0);
+    </insert>
+
+<!--    <select id="queryBySeckillIdWithSeckill" resultMap="successKilled">-->
+<!--                select-->
+<!--                sk.seckill_id sk_seckill_id,-->
+<!--                sk.user_phone,-->
+<!--                sk.state,-->
+<!--                sk.create_time sk_create_time,-->
+<!--                s.*-->
+<!--                from success_killed sk-->
+<!--                inner join seckill s-->
+<!--                on sk.seckill_id = s.seckill_id-->
+<!--                where sk.seckill_id = #{seckillId};-->
+<!--    </select>-->
+
+    <select id="queryBySeckillIdWithSeckill" resultType="successKilled">
+--      根据 seckillId 查询 successKilled 并携带 seckill 实体
+--      告诉 mybatis 把结果映射到 successKilled 的同时，映射 seckill 属性
+        select
+        sk.seckill_id,
+        sk.user_phone,
+        sk.state,
+        sk.create_time,
+        s.seckill_id "seckill.seckill_id",
+        s.name "seckill.name",
+        s.number "seckill.number",
+        s.start_time "seckill.start_time",
+        s.end_time "seckill.end_time",
+        s.create_time "seckill.create_time"
+        from success_killed sk
+        inner join seckill s
+        on sk.seckill_id = s.seckill_id
+        where sk.seckill_id = #{seckillId} and sk.user_phone = #{userPhone};
+    </select>
+</mapper>

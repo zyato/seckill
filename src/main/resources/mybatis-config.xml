@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE configuration
+                PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 配置全局属性 -->
+    <settings>
+        <!-- 使用 jdbc 的 getGeneratedKeys 获取数据库自增主键值（插入数据时，不需要插入自
+        增的 id，使用此设置 mybatis 会获取到插入后的 id 值为多少，并赋值给被插入的对象） -->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!-- 使用列别名替换列名 默认为：true
+            select name as title from table 
+            此时 mybatis 会识别到 title 并赋值到对应实体类属性中-->
+        <setting name="useColumnLabel" value="true"/>
+        <!-- 开启驼峰命名转换：表中规范是下划线分隔，而实体类是驼峰命名，开启后，mybatis 
+            会自动把下划线的命名格式匹配到对应驼峰命名格式 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>    
+
+<!--    <typeAliases>-->
+<!--        <package name="com.yato.entity"/>-->
+<!--    </typeAliases>-->
+
+<!--    <environments default="mysql">-->
+<!--        <environment id="mysql">-->
+<!--            <transactionManager type="JDBC"/>-->
+<!--            <dataSource type="POOLED">-->
+<!--                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/seckill?serverTimezone=UTC"/>-->
+<!--                <property name="username" value="root"/>-->
+<!--                <property name="password" value="123456"/>-->
+<!--            </dataSource>-->
+<!--        </environment>-->
+<!--    </environments>-->
+<!--    <mappers>-->
+<!--&lt;!&ndash;        <mapper resource="org/mybatis/example/BlogMapper.xml"/>&ndash;&gt;-->
+<!--        <package name="com.yato.mapper"/>-->
+<!--    </mappers>-->
+</configuration>
